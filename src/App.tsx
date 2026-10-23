@@ -1,17 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Sidebar from './components/Sidebar';
 
 import Login from './pages/Login';
-import Registro from './pages/Registro';
+import Registro from './components/Registro.tsx';
 import ChatSimulator from './pages/ChatSimulator';
 import Dashboard from './pages/Dashboard';
 import Diario from './pages/Diario';
 import RedFlags from './pages/RedFlags';
 import Recuerdos from './pages/Recuerdos';
 import ConfigEx from './pages/ConfigEx';
+import EntrenarEx from './pages/EntrenarEx';
 
 function AppLayout({ children }) {
   return (
@@ -90,6 +91,16 @@ export default function App() {
               <ProtectedRoute>
                 <AppLayout>
                   <ConfigEx />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/entrenar-ex"
+            element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <EntrenarEx />
                 </AppLayout>
               </ProtectedRoute>
             }

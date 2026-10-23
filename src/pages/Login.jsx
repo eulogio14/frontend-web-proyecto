@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Zap, Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
 
 export default function Login() {

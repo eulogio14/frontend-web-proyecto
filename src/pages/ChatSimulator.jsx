@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import api from '../api/axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { 
   Send, 
   Trash2, 
@@ -82,10 +82,8 @@ export default function ChatSimulator() {
 
   const handleToggleModo = async () => {
     setCambiandoModo(true);
-    const nuevoModo = user.modoActual === 'SUPERAR' ? 'RECORDAR' : 'SUPERAR';
-
     try {
-      const res = await api.patch('/usuarios/modo', { modo: nuevoModo });
+      const res = await api.patch('/usuarios/modo', { modo: 'RECORDAR' });
       updateUser(res.data);
     } catch (err) {
       console.error('Error al cambiar de modo', err);
@@ -139,29 +137,8 @@ export default function ChatSimulator() {
           </div>
         </div>
 
-        {/* Action Controls (Mode switch + Clear) */}
+        
         <div className="flex items-center gap-2.5">
-          <button
-            onClick={handleToggleModo}
-            disabled={cambiandoModo}
-            className={`px-3 py-1.5 rounded-full text-xs font-mono font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
-              user?.modoActual === 'SUPERAR'
-                ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30'
-                : 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border border-purple-500/40 hover:bg-purple-500/30'
-            }`}
-          >
-            {user?.modoActual === 'SUPERAR' ? (
-              <>
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>MODO SUPERAR</span>
-              </>
-            ) : (
-              <>
-                <HeartCrack className="w-3.5 h-3.5 text-purple-400" />
-                <span>MODO RECORDAR</span>
-              </>
-            )}
-          </button>
 
           <button
             onClick={handleLimpiarHistorial}

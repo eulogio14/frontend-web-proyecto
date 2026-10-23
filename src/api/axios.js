@@ -1,10 +1,10 @@
 import axios from 'axios';
 
+// No fijamos Content-Type globalmente: Axios lo pone en application/json
+// para los objetos y deja que el navegador agregue el boundary cuando el
+// cuerpo es un FormData (subida de imágenes).
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'https://backend-proyecto-si6n.onrender.com/api/v1',
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // Interceptor para inyectar el Bearer Token automáticamente

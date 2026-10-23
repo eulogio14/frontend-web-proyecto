@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Zap, User, Mail, Lock, HeartHandshake, AlertCircle, ArrowRight } from 'lucide-react';
 
 export default function Registro() {
@@ -10,6 +10,7 @@ export default function Registro() {
     password: '',
     nombreEx: '',
     fotoPerfilEx: '',
+    fotoPerfil: ''
   });
 
   const [error, setError] = useState('');
@@ -19,8 +20,30 @@ export default function Registro() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const {name, value, type, files} = e.target;
+    
+    if (type === 'file'){
+      const file = files[0];
+
+      if (file){
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData((prevData) => ({
+            ...prevData,
+            [name] : reader.result
+          }));
+        };
+        reader.readAsDataURL(file);
+      }
+    }else{
+      setFormData((prevData) => ({
+        ...prevData,
+        [name] : value
+      }));
+    }
   };
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,10 +73,8 @@ export default function Registro() {
           <div className="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-400 items-center justify-center shadow-lg shadow-emerald-500/20 mb-3">
             <Zap className="w-6 h-6 text-black font-black" />
           </div>
-          <h2 className="text-2xl font-bold text-white tracking-wide">Crear Expediente</h2>
-          <p className="text-xs text-slate-400 mt-1 font-mono">
-            Protocolo de Inmunidad Emocional & Contacto Cero
-          </p>
+          <h2 className="text-2xl font-bold text-white tracking-wide">Registrate</h2>
+          
         </div>
 
         {error && (
@@ -67,7 +88,7 @@ export default function Registro() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             <div>
               <label className="block text-[11px] font-mono uppercase text-slate-400 mb-1">
-                Tu Nombre
+                Como te llamaba A TI, tu ex?
               </label>
               <div className="relative">
                 <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
@@ -77,7 +98,7 @@ export default function Registro() {
                   required
                   value={formData.nombre}
                   onChange={handleChange}
-                  placeholder="Tu nombre"
+                  placeholder="Ej: Camilo "
                   className="w-full bg-prime-dark/80 border border-prime-border rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition-all"
                 />
               </div>
@@ -95,13 +116,12 @@ export default function Registro() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="ejemplo@utec.edu.pe"
                   className="w-full bg-prime-dark/80 border border-prime-border rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition-all"
                 />
               </div>
             </div>
-          </div>
 
+          </div>
           <div>
             <label className="block text-[11px] font-mono uppercase text-slate-400 mb-1">
               Contraseña
@@ -121,38 +141,72 @@ export default function Registro() {
           </div>
 
           <div className="pt-2 border-t border-prime-border/60">
-            <p className="text-[11px] font-mono text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <HeartHandshake className="w-3.5 h-3.5" /> Configuración de la Expareja
-            </p>
+            
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               <div>
                 <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
-                  Nombre o Apodo de tu Ex
+                  Nombre de tu Ex
                 </label>
                 <input
                   type="text"
                   name="nombreEx"
                   value={formData.nombreEx}
                   onChange={handleChange}
-                  placeholder="Ej: Camila, Mi Ex..."
+                  placeholder="Ej: Camila❤️ , Sarita🤍"
                   className="w-full bg-prime-dark/80 border border-prime-border rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition-all"
                 />
+              </div>
+              
+              <div>
+                <span className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                  Foto de perfil de WhatsApp tuya
+                </span>
+                
+                {/* El label ahora actúa como tu botón visual */}
+                <label className="w-full flex items-center justify-center bg-emerald-500/20 border border-prime-border rounded-xl px-3 py-2 text-xs transition-all cursor-pointer  text-emerald-400 hover:bg-emerald-500/30 border-dashed border-emerald-500/50 hover:border-emerald-500">
+                  
+                  {/* Texto dinámico: Cambia si ya hay una imagen cargada en tu estado */}
+                  <span className="font-semibold">
+                    {formData.fotoPerfil ? '✅ Imagen lista para subir' : '📁 Subir foto de tu PC'}
+                  </span>
+
+                  {/* El input real está aquí, pero es invisible (clase 'hidden') */}
+                  <input
+                    type="file"
+                    name="fotoPerfil"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="hidden" 
+                  />
+                </label>
               </div>
 
+
               <div>
-                <label className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
-                  URL Foto de Perfil (Opcional)
+                <span className="block text-[10px] font-mono uppercase text-slate-400 mb-1">
+                  Foto de perfil de WhatsApp de tu ex
+                </span>
+                
+                {/* El label ahora actúa como tu botón visual */}
+                <label className="w-full flex items-center justify-center bg-emerald-500/20 border border-prime-border rounded-xl px-3 py-2 text-xs transition-all cursor-pointer  text-emerald-400 hover:bg-emerald-500/30 border-dashed border-emerald-500/50 hover:border-emerald-500">
+                  
+                  {/* Texto dinámico: Cambia si ya hay una imagen cargada en tu estado */}
+                  <span className="font-semibold">
+                    {formData.fotoPerfilEx ? '✅ Imagen lista para subir' : '📁 Subir foto de tu PC'}
+                  </span>
+
+                  {/* El input real está aquí, pero es invisible (clase 'hidden') */}
+                  <input
+                    type="file"
+                    name="fotoPerfilEx"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="hidden" 
+                  />
                 </label>
-                <input
-                  type="url"
-                  name="fotoPerfilEx"
-                  value={formData.fotoPerfilEx}
-                  onChange={handleChange}
-                  placeholder="https://..."
-                  className="w-full bg-prime-dark/80 border border-prime-border rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition-all"
-                />
               </div>
+            
             </div>
           </div>
 
