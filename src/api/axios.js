@@ -4,7 +4,7 @@ import axios from 'axios';
 // para los objetos y deja que el navegador agregue el boundary cuando el
 // cuerpo es un FormData (subida de imágenes).
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://backend-proyecto-si6n.onrender.com/api/v1',
+  baseURL: import.meta.env.VITE_API_URL 
 });
 
 // Interceptor para inyectar el Bearer Token automáticamente
