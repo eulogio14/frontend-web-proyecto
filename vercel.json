@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://dbp-proyecto-env.eba-w5w4h3yx.us-east-1.elasticbeanstalk.com/api/:path*"
+      "destination": "http://54.92.202.176/api/:path*"
     },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
