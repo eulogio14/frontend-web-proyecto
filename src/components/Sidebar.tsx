@@ -61,19 +61,23 @@ export default function Sidebar() {
       </nav>
 
       <div className='flex flex-col mx-auto gap-2 items-center'>
-        <div>
+        <button
+          onClick={() => navigate('/perfil')}
+          title='Mi perfil'
+          className='flex items-center justify-center'
+        >
           {user?.fotoPerfil ? (
             <img 
               src={user.fotoPerfil} 
               alt={user?.nombre || "Foto de Perfil"}
-              className='w-12 h-12 rounded-full object-cover border border-slate-200'
+              className='w-10 h-10 rounded-full object-cover border border-slate-200'
             />
           ) : (
-            <div className='w-8 h-8 rounded-full bg-green-700 flex items-center justify-center border border-slate-200 '>
-              <User className='w-4 h-4 text-slate-400' />
+            <div className='w-10 h-10 rounded-full bg-green-700 flex items-center justify-center border border-slate-200'>
+              <User className='w-4 h-4 text-slate-300' />
             </div>
           )}
-        </div>
+        </button>
 
         <button
           onClick={handleLogout}
