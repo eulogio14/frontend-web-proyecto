@@ -1,10 +1,9 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import LayoutWhatsApp from './components/LayoutWhatsApp';
-import PerfilUsuario from './pages/PerfilUsuario';
-import Login from './pages/Login';
+import { AuthProvider } from './contexts/AuthContext.tsx';
+import ProtectedRoute from './components/RutaProtegida.tsx';
+import LayoutWhatsApp from './components/LayoutWhatsApp.tsx';
+import PerfilUsuario from './pages/PerfilUsuario.tsx';
+import Login from './pages/Login.tsx';
 import Registro from './components/Registro.tsx';
 
 export default function App() {

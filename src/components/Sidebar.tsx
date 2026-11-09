@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { 
@@ -13,8 +12,7 @@ import {
   Zap,
   ShieldAlert,
   Phone,
-  User,
-  BrainCircuit
+  User
 } from 'lucide-react';
 
 export default function Sidebar() {
@@ -28,7 +26,6 @@ export default function Sidebar() {
 
   const navItems = [
     { to: '/chat', label: 'Chats', icon: MessageSquare },
-    { to: '/entrenar-ex', label: 'Entrenar Ex', icon: BrainCircuit },
     { to: '/llamada', label: 'Llamadas', icon: Phone },
   ];
 
